@@ -1,20 +1,85 @@
-import { ProductContainer } from "./ProductComps"
-
+import { useState } from "react"
+import { FilterDiv, FilterLabel, FilterPair, FilterRange, FiltersLi, FiltersUl, InputLabel } from "./FilterCops"
+import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort } from "./ProductComps"
+import bagData from "../../data/bags"
+import { ProductCard } from "../ProductCard/ProductComps"
+import Product from "../ProductCard"
 const Products = () => {
+
+    const [maxPrice, setMaxPrice] = useState()
+
+    const updateValue = (e) => {
+        setMaxPrice(e.target.value)
+    }
+
     return (
-        <ProductContainer style={{fontSize:'2rem'}}>
-            Incididunt ullamco quis irure nulla laborum eiusmod nulla sint. Minim pariatur proident do cillum commodo quis nisi. Excepteur ea qui nostrud cillum reprehenderit velit duis excepteur cupidatat veniam eu. Ullamco id labore veniam laboris ullamco adipisicing excepteur deserunt deserunt dolore commodo. Veniam voluptate dolore aute fugiat aliquip eu qui id. Sunt ipsum commodo nostrud ad aliquip. Irure ullamco nulla sunt dolore enim ullamco consequat occaecat.
+        <MainContainer >
+            {/* container for filters, category, sort and products */}
+            <FilterAndProductContainer>
+                <FiltersDiv>
+                    <FiltersUl>
+                        <FiltersLi>
+                            <FilterLabel>Color</FilterLabel>
+                            <FilterDiv >
+                                <FilterPair>
+                                    <input type="checkbox" name="white" />
+                                    <InputLabel>white</InputLabel>
+                                </FilterPair>
+                                <FilterPair>
+                                    <input type="checkbox" name="black" />
+                                    <InputLabel>black</InputLabel>
+                                </FilterPair>
+                                <FilterPair>
+                                    <input type="checkbox" name="pink" />
+                                    <InputLabel>pink</InputLabel>
+                                </FilterPair>
+                            </FilterDiv>
 
-Ullamco Lorem consequat sunt id id. Reprehenderit voluptate laborum magna consequat aliqua. Lorem ex commodo ullamco dolore commodo ullamco in cillum aliqua eiusmod. Ea veniam excepteur mollit commodo. Reprehenderit in magna proident ad eiusmod deserunt dolor exercitation labore sint anim cillum. Incididunt consectetur proident esse dolor anim incididunt minim culpa aute nulla reprehenderit.
+                        </FiltersLi>
+                        <FiltersLi>
+                            <FilterDiv >
+                                <FilterLabel>Max Price </FilterLabel>
+                                <FilterLabel> {maxPrice || 50} </FilterLabel>
+                                <FilterRange type="range" min="1" max="100"  onChange={updateValue}></FilterRange>
+                            </FilterDiv>
+                        </FiltersLi>
 
-Voluptate dolore ea velit id veniam. Aliqua quis culpa sint laboris fugiat Lorem. Exercitation cillum exercitation consequat exercitation esse labore nulla eu exercitation aliquip nulla.
+                    </FiltersUl>
+                </FiltersDiv>
+                {/* container for category titles and sort menu */}
+                <CategoryProductsDiv>
+                    {/* category */}
+                    <CategorySortDiv>
+                        <CategoryDiv>
+                            <CategoryHeading>
+                                Bags
+                            </CategoryHeading>
+                            <CategoryDetails>
+                                17 items
+                            </CategoryDetails>
+                        </CategoryDiv>
+                        <SortDiv>
+                            <FilterLabel>Sort by:</FilterLabel>
+                            <SelectSort>
+                                <option> A-Z</option>
+                                <option> Z-A</option>
+                                <option> Price </option>
+                                <option> Price </option>
+                            </SelectSort>
+                        </SortDiv>
+                    </CategorySortDiv>
+                    {/* Products */}
+                    {bagData.map((item,index) => {
+                        return(
+<Product name={item.name} image={item.image} description={item.description} price={item.price} rating={item.rating} />)
+                        })}
+                     
+                    <ProductContainer>
 
-Duis dolore proident nulla nisi ad ullamco qui velit cillum ea aliquip pariatur. Consequat voluptate officia eu tempor id deserunt nostrud. Magna ea consequat ex cillum do laboris cillum occaecat aliquip. Laborum irure officia aute et minim. Magna elit eiusmod Lorem est ea occaecat irure est do consequat pariatur proident proident do. Consequat tempor consectetur est enim veniam ea consectetur velit mollit culpa labore proident.
-
-Incididunt veniam qui velit laboris esse nulla cupidatat commodo enim exercitation et ut labore. Enim proident tempor ea laboris id consequat do quis nisi est dolore do. Irure laborum sint ad irure deserunt ad quis nisi. Amet amet laborum minim ut nulla in aute veniam velit. Dolore eu ex consequat nostrud laborum veniam cillum sunt veniam do laboris velit. Est exercitation dolore dolor proident veniam veniam laboris pariatur excepteur cillum deserunt incididunt sunt.
-
-Adipisicing sint Lorem dolore occaecat deserunt cupidatat pariatur. In culpa deserunt laboris qui irure adipisicing magna ullamco voluptate. Enim excepteur consectetur sunt amet dolor dolore consectetur minim occaecat. Adipisicing aliqua ea ea enim. Ad esse commodo minim id amet mollit anim elit est laboris consequat laboris id labore.
-        </ProductContainer>
+                    </ProductContainer>
+                </CategoryProductsDiv>
+            </FilterAndProductContainer>
+        </MainContainer>
     )
 }
 export default Products
