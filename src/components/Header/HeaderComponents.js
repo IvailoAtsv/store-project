@@ -5,10 +5,8 @@ export const HeaderContainer = styled.nav`
 position: fixed;
 top:0;
 width:100%;
-max-width:1600px;
 left:50%;
 transform:translate(-50%);
-margin:0;
 height:100px;
 display:flex;
 flex-wrap:wrap;
@@ -21,10 +19,10 @@ z-index:50;
 export const NavbarLink = styled(Link)`
 color:black;
 padding:1rem;
-font-size:1.7rem;
+font-size:1.5rem;
 text-decoration:none;
 text-transform: uppercase;
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 900px) {
     display:none;
   }
 `
@@ -39,8 +37,8 @@ background:none;
 border:none;
 cursor:pointer;
 display:none;
-@media screen and (max-width: 720px) {
-    display:contents;
+@media screen and (max-width: 900px) {
+    display:block;
   }
 `
 export const LinkContainer = styled.div`

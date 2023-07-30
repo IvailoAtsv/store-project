@@ -1,15 +1,64 @@
-import { useState } from "react"
-import { FilterDiv, FilterLabel, FilterPair, FilterRange, FiltersLi, FiltersUl, InputLabel } from "./FilterCops"
-import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort } from "./ProductComps"
-import bagData from "../../data/bags"
-import { ProductCard } from "../ProductCard/ProductComps"
+import { useEffect, useReducer, useState } from "react"
+import { FilterDiv, FilterForm, FilterLabel, FilterPair, FilterRange, FilterSubmit, FiltersLi, FiltersUl, InputLabel } from "./FilterCops"
+import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters } from "./ProductComps"
 import Product from "../ProductCard"
-const Products = () => {
+const Products = ({ data, category, toggleFilters }) => {
+
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
+    const [items, setItems] = useState([])
+    const [filterPrice,setFilterPrice] = useState()
+    useEffect(() => {
+        setItems(data)
+    }, [])
+    // data = data.sort((a, b) => b.name.localeCompare(a.name))
 
     const [maxPrice, setMaxPrice] = useState()
 
+    const itemsFound = items.length;
+
+    const sortItems = (e) => {
+        if (e.target.value === 'A-Z') {
+            setItems(items.sort((a, b) => a.name.localeCompare(b.name)))
+            forceUpdate()
+        }
+        if (e.target.value === 'Z-A') {
+            setItems(items.sort((a, b) => b.name.localeCompare(a.name)))
+            forceUpdate()
+        }
+        if (e.target.value === 'Lowest') {
+            setItems(items.sort((a, b) => a.price - b.price))
+            forceUpdate()
+        }
+        if (e.target.value === 'Highest') {
+            setItems(items.sort((a, b) => b.price - a.price))
+            forceUpdate()
+        }
+    }
+
+
+    const onFilter = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget.parentElement)
+        const dataArray = [...formData]
+        const fullData = Object.fromEntries(dataArray);
+        let currentFilters = []
+        if (fullData.brown) {
+            currentFilters.push('brown')
+        }
+        if (fullData.white) {
+            currentFilters.push('white')
+        }
+        if (fullData.blue) {
+            currentFilters.push('blue')
+        }
+        if(fullData.length === 1 || fullData.length === 4){
+            setItems(data)
+        }
+        setItems(data.filter((x) => currentFilters.includes(x.color) && Number(x.price) <= Number(maxPrice)))
+        currentFilters = []
+    }
     const updateValue = (e) => {
-        setMaxPrice(e.target.value)
+        setMaxPrice(Number(e.target.value))
     }
 
     return (
@@ -18,32 +67,35 @@ const Products = () => {
             <FilterAndProductContainer>
                 <FiltersDiv>
                     <FiltersUl>
-                        <FiltersLi>
-                            <FilterLabel>Color</FilterLabel>
-                            <FilterDiv >
-                                <FilterPair>
-                                    <input type="checkbox" name="white" />
-                                    <InputLabel>white</InputLabel>
-                                </FilterPair>
-                                <FilterPair>
-                                    <input type="checkbox" name="black" />
-                                    <InputLabel>black</InputLabel>
-                                </FilterPair>
-                                <FilterPair>
-                                    <input type="checkbox" name="pink" />
-                                    <InputLabel>pink</InputLabel>
-                                </FilterPair>
-                            </FilterDiv>
 
-                        </FiltersLi>
-                        <FiltersLi>
-                            <FilterDiv >
-                                <FilterLabel>Max Price </FilterLabel>
-                                <FilterLabel> {maxPrice || 50} </FilterLabel>
-                                <FilterRange type="range" min="1" max="100"  onChange={updateValue}></FilterRange>
-                            </FilterDiv>
-                        </FiltersLi>
+                        <FilterForm>
+                            <FiltersLi>
+                                <FilterDiv >
+                                    <FilterLabel>Color</FilterLabel>
+                                    <FilterPair>
+                                        <input type="checkbox" name="blue" />
+                                        <InputLabel>blue</InputLabel>
+                                    </FilterPair>
+                                    <FilterPair>
+                                        <input type="checkbox" name="white" />
+                                        <InputLabel>white</InputLabel>
+                                    </FilterPair>
+                                    <FilterPair>
+                                        <input type="checkbox" name="brown" />
+                                        <InputLabel>brown</InputLabel>
+                                    </FilterPair>
+                                </FilterDiv>
 
+                            </FiltersLi>
+                            <FiltersLi>
+                                <FilterDiv >
+                                    <FilterLabel>Max Price </FilterLabel>
+                                    <FilterLabel> {maxPrice || 100} </FilterLabel>
+                                    <FilterRange name="price" type="range" min="1" max="100" defaultValue="100" onChange={updateValue}></FilterRange>
+                                </FilterDiv>
+                            </FiltersLi>
+                            <FilterSubmit type="submit" value="Filter" onClick={(e) => onFilter(e)} />
+                        </FilterForm>
                     </FiltersUl>
                 </FiltersDiv>
                 {/* container for category titles and sort menu */}
@@ -52,30 +104,35 @@ const Products = () => {
                     <CategorySortDiv>
                         <CategoryDiv>
                             <CategoryHeading>
-                                Bags
+                                Showing {itemsFound} items in {category}
                             </CategoryHeading>
-                            <CategoryDetails>
-                                17 items
-                            </CategoryDetails>
                         </CategoryDiv>
+
                         <SortDiv>
                             <FilterLabel>Sort by:</FilterLabel>
-                            <SelectSort>
-                                <option> A-Z</option>
-                                <option> Z-A</option>
-                                <option> Price </option>
-                                <option> Price </option>
+                            <SelectSort onChange={(e) => sortItems(e)}>
+                                <option> A-Z </option>
+                                <option> Z-A </option>
+                                <option> Lowest </option>
+                                <option> Highest </option>
                             </SelectSort>
+                            <ShowFilters onClick={toggleFilters}>Filters</ShowFilters>
                         </SortDiv>
                     </CategorySortDiv>
                     {/* Products */}
-                    {bagData.map((item,index) => {
-                        return(
-<Product name={item.name} image={item.image} description={item.description} price={item.price} rating={item.rating} />)
-                        })}
-                     
-                    <ProductContainer>
 
+                    <ProductContainer>
+                        {items.map((item, index) => {
+                            return (
+                                <Product
+                                    key={index}
+                                    name={item.name}
+                                    image={item.image}
+                                    description={item.description}
+                                    price={item.price}
+                                    rating={item.rating}
+                                />)
+                        })}
                     </ProductContainer>
                 </CategoryProductsDiv>
             </FilterAndProductContainer>
