@@ -122,7 +122,8 @@ const Products = ({ data, category, toggleFilters }) => {
                     {/* Products */}
 
                     <ProductContainer>
-                        {items.map((item, index) => {
+                        {items.length
+                        ?items.map((item, index) => {
                             return (
                                 <Product
                                     key={index}
@@ -132,7 +133,8 @@ const Products = ({ data, category, toggleFilters }) => {
                                     price={item.price}
                                     rating={item.rating}
                                 />)
-                        })}
+                        })
+                    :<h1>No items found!</h1>}
                     </ProductContainer>
                 </CategoryProductsDiv>
             </FilterAndProductContainer>
