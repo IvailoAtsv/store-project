@@ -33,6 +33,7 @@ the product list remained unfazed. After a couple of hours of looking through st
 
 
 //Product Container
+
 The product container is a simple div, aligned using flexbox, and flex-flow.
 Each item is a product card, which is the product of a map.
 each product card features the following structure:
