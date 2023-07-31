@@ -13,7 +13,7 @@ justify-content:center;
 align-items:center;
 overflow:hidden;
 @media screen and (max-width: 720px) {
-    width:200px;
+    width:180px;
   }
 `
 export const ProductImg = styled.img`

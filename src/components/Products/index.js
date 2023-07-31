@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react"
 import { FilterDiv, FilterForm, FilterLabel, FilterPair, FilterRange, FilterSubmit, FilterTitle, FiltersHeading, FiltersLi, FiltersUl, HideFiltersBtn, InputLabel } from "./FilterCops"
-import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters } from "./ProductComps"
+import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters, SortTitleAndSelect } from "./ProductComps"
 import Product from "../ProductCard"
 import { FaTimes } from 'react-icons/fa';
 
@@ -11,7 +11,6 @@ const Products = ({ data, category }) => {
     const [uniqueColors, setUniqueColors] = useState([])
     const toggleFilters = () => {
         setIsFilterOpen(!isFilterOpen)
-        console.log(isFilterOpen);
     }
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
@@ -85,7 +84,6 @@ const Products = ({ data, category }) => {
         const fullData = Object.fromEntries(dataArray);
         let currentFilters = []
         let selectedFilters = Object.keys(fullData)
-        console.log(selectedFilters);
         if (uniqueColors.includes(...selectedFilters)) {
 
             for (let color of selectedFilters) {
@@ -159,6 +157,7 @@ const Products = ({ data, category }) => {
                         </CategoryDiv>
 
                         <SortDiv>
+                            <SortTitleAndSelect>
                             <FilterLabel>Sort by:</FilterLabel>
                             <SelectSort onChange={(e) => sortItems(e)}>
                                 <option> A-Z </option>
@@ -166,6 +165,7 @@ const Products = ({ data, category }) => {
                                 <option> Lowest </option>
                                 <option> Highest </option>
                             </SelectSort>
+                            </SortTitleAndSelect>
                             <ShowFilters onClick={toggleFilters}>Filters</ShowFilters>
                         </SortDiv>
                     </CategorySortDiv>

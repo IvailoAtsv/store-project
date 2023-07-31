@@ -8,16 +8,7 @@ import {
   SideBtnWrap
 } from './SidebarElements';
 
-const Sidebar = ({ isOpen, toggle, currentPage }) => {
-
-  const handleClickScroll = () => {
-    const element = document.getElementById('footer')
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    } else {
-      console.log('ne brat ne stava');
-    }
-  }
+const Sidebar = ({ isOpen, toggle }) => {
 
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -25,10 +16,9 @@ const Sidebar = ({ isOpen, toggle, currentPage }) => {
         <CloseIcon />
       </Icon>
       <SidebarMenu>
-        <SidebarLink>Bags</SidebarLink>
-        <SidebarLink>Shoes</SidebarLink>
-        <SidebarLink>Dresses</SidebarLink>
-        <SidebarLink>Watches</SidebarLink>
+        <SidebarLink to="/">Bags</SidebarLink>
+        <SidebarLink to="/shoes">Shoes</SidebarLink>
+        <SidebarLink to="/dresses">Dresses</SidebarLink>
       </SidebarMenu>
 
       <SideBtnWrap>

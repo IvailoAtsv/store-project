@@ -26,15 +26,25 @@ export const FiltersDiv = styled.div`
 transition:0.35s;
 min-width:20%;
 height:100%;
+display:flex;
+justify-content:center;
 @media screen and (max-width: 910px) {
   background-color:white;
   margin:0;
   width:35%;
   position:fixed;
-  padding-left:2rem;
   z-index:10;
   left:${({isFilterOpen}) => isFilterOpen? '0rem' : '-1000px'};
 }
+@media screen and (max-width: 620px) {
+  background-color:white;
+  margin:0;
+  width:100%;
+  position:fixed;
+  z-index:10;
+  left:${({isFilterOpen}) => isFilterOpen? '0rem' : '-1000px'};
+}
+
 `
 
 
@@ -45,6 +55,7 @@ height:100%;
 export const CategoryHeading = styled.p`
 font-size:2rem;
 margin:0;
+text-align:center;
 `
 export const CategoryDetails = styled.h2`
 font-size:1rem;
@@ -76,12 +87,12 @@ justify-content:center;
 @media screen and (max-width: 910px) {
     width:100%;
     padding:1rem 0;
-
+  flex-direction:column;
   }
 `
 export const SelectSort = styled.select`
 width:10rem;
-height:2rem;
+height:2.4rem;
 border:none;
 box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 `
@@ -97,6 +108,8 @@ margin-top:1rem;
 padding-left:3rem;
 @media screen and (max-width: 910px) {
 flex-direction:column;
+padding-left:0rem;
+
   }
 `
 export const ShowFilters = styled.button`
@@ -120,4 +133,10 @@ flex-wrap:wrap;
 gap:1.5rem;
 justify-content:center;
 align-items:center;
+`
+export const SortTitleAndSelect = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+gap:5px;
 `

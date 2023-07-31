@@ -30,6 +30,10 @@ export const NavLogo = styled.img`
 height:100px;
 width:auto !important;
 padding-left:3rem;
+@media screen and (max-width: 900px) {
+  padding:0;
+  margin:0;
+}
 `
 export const NavButton = styled.button`
 font-size:2.5rem;
@@ -43,5 +47,8 @@ display:none;
 `
 export const LinkContainer = styled.div`
 padding-right:3rem;
+@media screen and (max-width: 900px) {
+  padding-right:1rem;
 
+}
 `

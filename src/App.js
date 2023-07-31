@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Sidebar from './components/Sidebar'
 import { GlobalStyle } from './globalStyles';
 import bagData from './data/bags';
-import Filters from './components/Filters';
 import shoesData from './data/shoes';
 import dressesData from './data/dresses';
 
@@ -27,19 +26,16 @@ function App() {
       <Header toggle={toggle} />
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Route exact path="/shoes">
-        <Filters isFilterOpen={isFilterOpen} toggleFilters={toggleFilters} />
 
         <Products toggleFilters={toggleFilters} data={shoesData} category={'shoes'} />
 
       </Route>
       <Route exact path="/dresses">
-        <Filters isFilterOpen={isFilterOpen} toggleFilters={toggleFilters} />
 
         <Products toggleFilters={toggleFilters} data={dressesData} category={'dresses'} />
 
       </Route>
       <Route exact path="/">
-        <Filters isFilterOpen={isFilterOpen} toggleFilters={toggleFilters} />
 
         <Products toggleFilters={toggleFilters} data={bagData} category={'bags'} />
 

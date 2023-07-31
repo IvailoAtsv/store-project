@@ -11,6 +11,8 @@ export const FiltersUl = styled.ul`
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  background-color:rgba(255,255,255,.90);
+  border-radius:5px;
   gap:1rem;
   padding:0;
   margin-top:70px;
@@ -21,11 +23,9 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 gap:.5rem;
-background-color:rgba(255,255,255,.90);
 width:100%;
 padding:1rem;
-border-radius:5%;
-height:200px;
+height:210px;
 width:150px;
 
 `
@@ -74,7 +74,7 @@ align-items:center;
 export const FilterSubmit = styled.input`
 background-color:${themeColor};
 border:none;
-margin-top:10px;
+margin-bottom:10px;
 min-width:150px;
 padding:10px 0;
 border-radius:5px;
@@ -100,6 +100,7 @@ display:none;
 border-radius:50%;
 border:none;
 cursor:pointer;
+align-self:flex-end;
 :hover{
   transition:0.5s;
   
@@ -110,8 +111,10 @@ cursor:pointer;
 
 `
 export const FiltersHeading = styled.div`
+width:100%;
 display:flex;
 flex-direction:column;
 align-items:center;
+gap:1rem;
 justify-content:center;
 `
