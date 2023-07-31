@@ -1,8 +1,17 @@
 import { useEffect, useReducer, useState } from "react"
-import { FilterDiv, FilterForm, FilterLabel, FilterPair, FilterRange, FilterSubmit, FiltersLi, FiltersUl, InputLabel } from "./FilterCops"
+import { FilterDiv, FilterForm, FilterLabel, FilterPair, FilterRange, FilterSubmit, FilterTitle, FiltersHeading, FiltersLi, FiltersUl, HideFiltersBtn, InputLabel } from "./FilterCops"
 import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters } from "./ProductComps"
 import Product from "../ProductCard"
-const Products = ({ data, category, toggleFilters }) => {
+import { FaTimes } from 'react-icons/fa';
+
+const Products = ({ data, category }) => {
+
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+    const toggleFilters = () =>{
+        setIsFilterOpen(!isFilterOpen)
+        console.log(isFilterOpen);
+      }
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
     const [items, setItems] = useState([])
@@ -74,8 +83,12 @@ const Products = ({ data, category, toggleFilters }) => {
         <MainContainer >
             {/* container for filters, category, sort and products */}
             <FilterAndProductContainer>
-                <FiltersDiv>
+                <FiltersDiv isFilterOpen={isFilterOpen}>
                     <FiltersUl>
+                    <FiltersHeading>
+                    <HideFiltersBtn onClick={toggleFilters}><FaTimes/></HideFiltersBtn>
+                    <FilterTitle style={{fontWeight:"bold", fontSize:'2.5rem'}}>Filters</FilterTitle>
+                    </FiltersHeading>
 
                         <FilterForm>
                             <FiltersLi>

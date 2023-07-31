@@ -11,13 +11,10 @@ import Filters from './components/Filters';
 function App() {
   
   const [isOpen, setIsOpen] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  const toggleFilters = () =>{
-    setIsFilterOpen(!isFilterOpen)
-  }
+  
   return (
     
     <Router>
@@ -25,9 +22,8 @@ function App() {
       <Header toggle={toggle}/>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Route path="/">
-      <Filters isFilterOpen={isFilterOpen} toggleFilters={toggleFilters} />
 
-        <Products toggleFilters={toggleFilters} data={bagData} category={'bags'}/>
+        <Products data={bagData} category={'bags'}/>
 
       </Route>
     </Router>

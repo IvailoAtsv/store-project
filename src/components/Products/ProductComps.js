@@ -9,7 +9,7 @@ align-items:center;
 @media screen and (max-width: 910px) {
   width:100%;
   margin:0;
-margin-top:100px;
+margin-top:80px;
 }
 `
 
@@ -23,11 +23,18 @@ justify-content:center;
 `
 
 export const FiltersDiv = styled.div`
+transition:0.35s;
 min-width:20%;
 height:100%;
 @media screen and (max-width: 910px) {
-    display:none;
-  }
+  background-color:white;
+  margin:0;
+  width:35%;
+  position:fixed;
+  padding-left:2rem;
+  z-index:10;
+  left:${({isFilterOpen}) => isFilterOpen? '0rem' : '-1000px'};
+}
 `
 
 
