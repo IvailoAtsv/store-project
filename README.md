@@ -32,9 +32,9 @@ each product card features the following structure:
 1. image
 2. heading
 3. rating
-4.description
-5.price
-6.add to card button
+4. description
+5. price
+6. add to card button
 
 The rating is displayed using 5 stars, which dynamically change colors based on the rating recieved from the data array.
 some of the products have their price discounted, which i managed to do by adding the old price, colored in red and crossed, next to the new price.
