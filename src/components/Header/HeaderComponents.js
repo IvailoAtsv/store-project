@@ -11,6 +11,16 @@ height:100px;
 display:flex;
 flex-wrap:wrap;
 align-items:center;
+justify-content:center;
+background-color:white;
+overflow:hidden;
+z-index:50;
+`
+export const NavContainer = styled.div`
+width:85%;
+display:flex;
+flex-wrap:wrap;
+align-items:center;
 justify-content:space-between;
 background-color:white;
 overflow:hidden;
