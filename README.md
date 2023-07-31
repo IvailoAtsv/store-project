@@ -3,6 +3,7 @@ I've decided to build the project using React.js, for no other reason than to pr
 The website has been built from the ground up, not using any templates, with the exception of the sidebar/menu that i got from another project of mine, because i like the way it works.
 
 Step by step:
+
 //navbar
 When you enter the site, the first thing you see is the Navbar at the top part of the page. Said navbar was built using a div that contains a logo and a couple of links, that change what items are being shown in the PLP.
 In mobile view the navbar consists only of the logo and a hamburger menu.
