@@ -36,6 +36,7 @@ const Products = ({ data, category }) => {
         }
         setHighest(maxPrice + 0.01)
     }, [category])
+
     useEffect(() => {
         // Initialize a Set to store the UNIQUE colors
         const currentUniqueColors = new Set();
@@ -83,25 +84,23 @@ const Products = ({ data, category }) => {
         const dataArray = [...formData]
         const fullData = Object.fromEntries(dataArray);
         let currentFilters = []
+        let selectedFilters = Object.keys(fullData)
+        console.log(selectedFilters);
+        if (uniqueColors.includes(...selectedFilters)) {
 
-        if (fullData.brown || fullData.white || fullData.blue) {
+            for (let color of selectedFilters) {
+                if (fullData[color] && fullData[color] !== 'price') {
+                    currentFilters.push(color)
+                }
+            }
 
-            if (fullData.brown) {
-                currentFilters.push('brown')
-            }
-            if (fullData.white) {
-                currentFilters.push('white')
-            }
-            if (fullData.blue) {
-                currentFilters.push('blue')
-            }
             setItems(data.filter((x) => currentFilters.includes(x.color)))
 
             currentFilters = []
         } else {
             setItems([...data])
         }
-        if (fullData.price && fullData.price != 100) {
+        if (fullData.price && fullData.price != highest) {
             setItems(prev => prev.filter(x => Number(x.price) < Number(maxPrice)))
         }
     }
@@ -123,7 +122,7 @@ const Products = ({ data, category }) => {
                         <FilterForm>
                             <FiltersLi>
                                 <FilterDiv >
-                                <FilterLabel>Color</FilterLabel>
+                                    <FilterLabel>Color</FilterLabel>
 
                                     {
                                         uniqueColors.map(color => {

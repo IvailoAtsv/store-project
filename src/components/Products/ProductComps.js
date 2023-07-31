@@ -90,11 +90,11 @@ export const CategorySortDiv = styled.div`
 width:100%;
 height:auto;
 display:flex;
-gap:1rem;
 flex-direction:row;
 justify-content:center;
 align-items:center;
 margin-top:1rem;
+padding-left:3rem;
 @media screen and (max-width: 910px) {
 flex-direction:column;
   }
