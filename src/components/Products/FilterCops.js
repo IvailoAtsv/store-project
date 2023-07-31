@@ -19,8 +19,10 @@ justify-content:center;
 gap:.5rem;
 background-color:white;
 width:100%;
-padding:3rem;
+padding:1rem;
+border-radius:5%;
 height:200px;
+width:150px;
 `
 export const FilterLabel = styled.label`
 font-size:2rem;
@@ -44,6 +46,7 @@ display: flex;
 export const FilterPair = styled.div`
 display: flex;
 width:100%;
+gap:1rem;
 align-items:basline;
 justify-content:justify;
   @media screen and (max-width: 910px) {

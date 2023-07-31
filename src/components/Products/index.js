@@ -18,44 +18,53 @@ const Products = ({ data, category, toggleFilters }) => {
 
     const sortItems = (e) => {
         if (e.target.value === 'A-Z') {
-            setItems(items.sort((a, b) => a.name.localeCompare(b.name)))
+            setItems(prev => prev.sort((a, b) => a.name.localeCompare(b.name)))
             forceUpdate()
         }
         if (e.target.value === 'Z-A') {
-            setItems(items.sort((a, b) => b.name.localeCompare(a.name)))
+            setItems(prev => prev.sort((a, b) => b.name.localeCompare(a.name)))
             forceUpdate()
         }
         if (e.target.value === 'Lowest') {
-            setItems(items.sort((a, b) => a.price - b.price))
+            setItems(prev => prev.sort((a, b) => a.price - b.price))
             forceUpdate()
         }
         if (e.target.value === 'Highest') {
-            setItems(items.sort((a, b) => b.price - a.price))
+            setItems(prev => prev.sort((a, b) => b.price - a.price))
             forceUpdate()
         }
     }
 
 
     const onFilter = (e) => {
+
         e.preventDefault()
+
         const formData = new FormData(e.currentTarget.parentElement)
         const dataArray = [...formData]
         const fullData = Object.fromEntries(dataArray);
         let currentFilters = []
-        if (fullData.brown) {
-            currentFilters.push('brown')
+
+        if(fullData.brown || fullData.white || fullData.blue){
+
+            if (fullData.brown) {
+                currentFilters.push('brown')
+            }
+            if (fullData.white) {
+                currentFilters.push('white')
+            }
+            if (fullData.blue) {
+                currentFilters.push('blue')
+            }
+            setItems(data.filter((x) => currentFilters.includes(x.color)))
+            
+            currentFilters = []
+        }else{
+            setItems([...data])
         }
-        if (fullData.white) {
-            currentFilters.push('white')
+        if(fullData.price && fullData.price != 100){
+            setItems(prev => prev.filter(x => Number(x.price) < Number(maxPrice)))
         }
-        if (fullData.blue) {
-            currentFilters.push('blue')
-        }
-        if(fullData.length === 1 || fullData.length === 4){
-            setItems(data)
-        }
-        setItems(data.filter((x) => currentFilters.includes(x.color) && Number(x.price) <= Number(maxPrice)))
-        currentFilters = []
     }
     const updateValue = (e) => {
         setMaxPrice(Number(e.target.value))
