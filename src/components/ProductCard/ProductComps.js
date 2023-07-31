@@ -60,3 +60,13 @@ justify-content:center;
 align-items:center;
 gap:10px;
 `
+export const Discounted = styled.p`
+text-decoration:line-through;
+color:red;
+
+`
+export const DiscDiv = styled.div`
+display:flex;
+align-items:center;
+gap:.5rem;
+`

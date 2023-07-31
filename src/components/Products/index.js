@@ -182,6 +182,7 @@ const Products = ({ data, category }) => {
                                         description={item.description}
                                         price={item.price}
                                         rating={item.rating}
+                                        discounted={item.discounted}
                                     />)
                             })
                             : <h1>No items found!</h1>}
