@@ -1,25 +1,46 @@
 import { useEffect, useReducer, useState } from "react"
 import { FilterDiv, FilterForm, FilterLabel, FilterPair, FilterRange, FilterSubmit, FilterTitle, FiltersHeading, FiltersLi, FiltersUl, HideFiltersBtn, InputLabel } from "./FilterCops"
-import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters, SortTitleAndSelect } from "./ProductComps"
+import { CategoryDetails, CategoryHeading, CategoryDiv, CategoryProductsDiv, CategorySortDiv, FilterAndProductContainer, FiltersDiv, MainContainer, ProductContainer, Filters, SortDiv, SelectSort, ShowFilters, SortTitleAndSelect, LoadMoreBtn, ProductAndLoadMoreDiv } from "./ProductComps"
 import Product from "../ProductCard"
 import { FaTimes } from 'react-icons/fa';
-
+import {
+    slice, concat,
+} from 'lodash';
 const Products = ({ data, category }) => {
 
     const [highest, setHighest] = useState()
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [uniqueColors, setUniqueColors] = useState([])
+    const [loadedIndex, setLoadedIndex] = useState(0)
+
+    const itemsToLoad = 20
+
     const toggleFilters = () => {
         setIsFilterOpen(!isFilterOpen)
     }
 
+    const dataLength = data.length;
+    const DATA = data
+    const LIMIT = 20;
+
+    const [showMore, setShowMore] = useState(true);
+    const [index, setIndex] = useState(LIMIT);
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(DATA.slice(0, LIMIT))
+
+    const loadMore = () => {
+        const newIndex = index + LIMIT;
+        const newShowMore = newIndex <= (dataLength - 1);
+        const newItems = concat(items, DATA.slice(index, newIndex));
+        setIndex(newIndex);
+        setItems(newItems);
+        setShowMore(newShowMore);
+    }
+
 
     useEffect(() => {
-        setItems(data.sort((a, b) => a.name.localeCompare(b.name)))
-    }, [category])
-
+        setItems(data.slice(0, 20))
+    }, [])
 
     //set a max price for filtering
     useEffect(() => {
@@ -158,35 +179,40 @@ const Products = ({ data, category }) => {
 
                         <SortDiv>
                             <SortTitleAndSelect>
-                            <FilterLabel>Sort by:</FilterLabel>
-                            <SelectSort onChange={(e) => sortItems(e)}>
-                                <option> A-Z </option>
-                                <option> Z-A </option>
-                                <option> Lowest </option>
-                                <option> Highest </option>
-                            </SelectSort>
+                                <FilterLabel>Sort by:</FilterLabel>
+                                <SelectSort onChange={(e) => sortItems(e)}>
+                                    <option> A-Z </option>
+                                    <option> Z-A </option>
+                                    <option> Lowest </option>
+                                    <option> Highest </option>
+                                </SelectSort>
                             </SortTitleAndSelect>
                             <ShowFilters onClick={toggleFilters}>Filters</ShowFilters>
                         </SortDiv>
                     </CategorySortDiv>
                     {/* Products */}
-
-                    <ProductContainer>
-                        {items.length
-                            ? items.map((item, index) => {
-                                return (
-                                    <Product
-                                        key={index}
-                                        name={item.name}
-                                        image={item.image}
-                                        description={item.description}
-                                        price={item.price}
-                                        rating={item.rating}
-                                        discounted={item.discounted}
-                                    />)
-                            })
-                            : <h1>No items found!</h1>}
-                    </ProductContainer>
+                    <ProductAndLoadMoreDiv>
+                        <ProductContainer>
+                            {items.length
+                                ? items.map((item, index) => {
+                                    return (
+                                        <Product
+                                            name={item.name}
+                                            image={item.image}
+                                            description={item.description}
+                                            price={item.price}
+                                            rating={item.rating}
+                                            discounted={item.discounted}
+                                            key={index}
+                                        />)
+                                })
+                                : <h1>No items found!</h1>}
+                                </ProductContainer>
+                            {showMore
+                                ? <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+                                : ''
+                            }
+                    </ProductAndLoadMoreDiv>
                 </CategoryProductsDiv>
             </FilterAndProductContainer>
         </MainContainer>

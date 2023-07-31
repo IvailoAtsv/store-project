@@ -216,4 +216,5 @@ const shoesData = [
         color: "blue"
     },
 ]
+
 export default shoesData

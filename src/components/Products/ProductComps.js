@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 
+const themeColor = process.env.REACT_APP_THEME_COLOR
+
 export const MainContainer = styled.div`
 width:90%;
 margin:100px;
@@ -124,7 +126,15 @@ background-color:white;
   display:block;
     }
 `
-
+export const ProductAndLoadMoreDiv = styled.div`
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:2rem;
+`
 export const ProductContainer = styled.div`
 width:100%;
 margin-top:1rem;
@@ -139,4 +149,11 @@ display:flex;
 align-items:center;
 justify-content:center;
 gap:5px;
+`
+export const LoadMoreBtn = styled.button`
+border:none;
+background-color:${themeColor};
+padding:1rem;
+border-radius:8px;
+font-size:1.6rem;
 `
