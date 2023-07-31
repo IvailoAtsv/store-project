@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 
+const themeColor = process.env.REACT_APP_THEME_COLOR
+
+
 export const FiltersUl = styled.ul`
   width:80%;
   height:100%;
@@ -69,7 +72,7 @@ flex-direction:column;
 align-items:center;
 `
 export const FilterSubmit = styled.input`
-background-color:blue;
+background-color:${themeColor};
 border:none;
 margin-top:10px;
 min-width:150px;

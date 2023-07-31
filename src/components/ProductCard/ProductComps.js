@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 
+const themeColor = process.env.REACT_APP_THEME_COLOR
+
 export const ProductCard = styled.div`
 background-color:white;
 height:500px;
@@ -15,9 +17,9 @@ overflow:hidden;
   }
 `
 export const ProductImg = styled.img`
-width:100%;
-height:100%;
-object-fit:contain;
+width:90%;
+height:50%;
+object-fit:cover;
 `
 export const ProductTitle = styled.p`
 font-size:1.5rem;
@@ -46,12 +48,12 @@ export const ProductButton = styled.button`
 padding: 10px 30px;
 border-radius:5px;
 border:none;
-background-color:blue;
-margin-bottom:10px;
+
+background-color:${themeColor};
 `
 
 export const ProductDataDiv = styled.div`
-height:100%;
+height:45%;
 display:flex;
 flex-direction:column;
 justify-content:center;
