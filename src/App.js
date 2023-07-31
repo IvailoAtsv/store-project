@@ -8,6 +8,7 @@ import { GlobalStyle } from './globalStyles';
 import bagData from './data/bags';
 import shoesData from './data/shoes';
 import dressesData from './data/dresses';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
   return (
 
     <Router>
+
       <GlobalStyle />
       <Header toggle={toggle} />
       <Sidebar isOpen={isOpen} toggle={toggle} />
@@ -40,6 +42,7 @@ function App() {
         <Products toggleFilters={toggleFilters} data={bagData} category={'bags'} />
 
       </Route>
+      <Footer />
     </Router>
 
   );
