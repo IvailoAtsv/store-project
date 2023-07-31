@@ -160,7 +160,7 @@ const Products = ({ data, category }) => {
                                 <FilterDiv >
                                     <FilterLabel>Max Price </FilterLabel>
                                     <FilterLabel> {maxPrice || highest} </FilterLabel>
-                                    <FilterRange name="price" type="range" min="1" max={highest} defaultValue="100" onChange={updateValue}></FilterRange>
+                                    <FilterRange name="price" type="range" min="1" max={highest} defaultValue={highest} onChange={updateValue}></FilterRange>
                                 </FilterDiv>
                             </FiltersLi>
                             <FilterSubmit type="submit" value="Filter" onClick={(e) => onFilter(e)} />
