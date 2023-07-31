@@ -9,7 +9,6 @@ const Header = ({toggle}) => {
             <NavbarLink to="/">bags</NavbarLink>
             <NavbarLink to="/shoes">shoes</NavbarLink>
             <NavbarLink to="/dresses">dresses</NavbarLink>
-            <NavbarLink to="/watches">watches</NavbarLink>
             <NavButton onClick={toggle}> <MdMenu /> </NavButton>
             </LinkContainer>
         </HeaderContainer>

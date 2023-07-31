@@ -6,20 +6,50 @@ import { FaTimes } from 'react-icons/fa';
 
 const Products = ({ data, category }) => {
 
+    const [highest, setHighest] = useState()
     const [isFilterOpen, setIsFilterOpen] = useState(false)
-
-    const toggleFilters = () =>{
+    const [uniqueColors, setUniqueColors] = useState([])
+    const toggleFilters = () => {
         setIsFilterOpen(!isFilterOpen)
         console.log(isFilterOpen);
-      }
+    }
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
     const [items, setItems] = useState([])
-    const [filterPrice,setFilterPrice] = useState()
+
     useEffect(() => {
-        setItems(data)
-    }, [])
-    // data = data.sort((a, b) => b.name.localeCompare(a.name))
+        setItems(data.sort((a, b) => a.name.localeCompare(b.name)))
+    }, [category])
+
+
+    //set a max price for filtering
+    useEffect(() => {
+        // Initialize the maxPrice variable with the price of the first product
+        let maxPrice = parseFloat(data[0].price);
+
+        // Loop through the array to find the maximum price
+        for (const product of data) {
+            const price = parseFloat(product.price);
+            if (price > maxPrice) {
+                maxPrice = price;
+            }
+        }
+        setHighest(maxPrice + 0.01)
+    }, [category])
+    useEffect(() => {
+        // Initialize a Set to store the UNIQUE colors
+        const currentUniqueColors = new Set();
+
+        // Loop through the array and add each color to the Set
+        for (const product of data) {
+            currentUniqueColors.add(product.color);
+        }
+
+        // Convert the Set back to an array if necessary
+        const currentUniqueColorsArray = Array.from(currentUniqueColors);
+        setUniqueColors([...currentUniqueColors])
+    }, [category])
+
 
     const [maxPrice, setMaxPrice] = useState()
 
@@ -54,7 +84,7 @@ const Products = ({ data, category }) => {
         const fullData = Object.fromEntries(dataArray);
         let currentFilters = []
 
-        if(fullData.brown || fullData.white || fullData.blue){
+        if (fullData.brown || fullData.white || fullData.blue) {
 
             if (fullData.brown) {
                 currentFilters.push('brown')
@@ -66,12 +96,12 @@ const Products = ({ data, category }) => {
                 currentFilters.push('blue')
             }
             setItems(data.filter((x) => currentFilters.includes(x.color)))
-            
+
             currentFilters = []
-        }else{
+        } else {
             setItems([...data])
         }
-        if(fullData.price && fullData.price != 100){
+        if (fullData.price && fullData.price != 100) {
             setItems(prev => prev.filter(x => Number(x.price) < Number(maxPrice)))
         }
     }
@@ -85,35 +115,34 @@ const Products = ({ data, category }) => {
             <FilterAndProductContainer>
                 <FiltersDiv isFilterOpen={isFilterOpen}>
                     <FiltersUl>
-                    <FiltersHeading>
-                    <HideFiltersBtn onClick={toggleFilters}><FaTimes/></HideFiltersBtn>
-                    <FilterTitle style={{fontWeight:"bold", fontSize:'2.5rem'}}>Filters</FilterTitle>
-                    </FiltersHeading>
+                        <FiltersHeading>
+                            <HideFiltersBtn onClick={toggleFilters}><FaTimes /></HideFiltersBtn>
+                            <FilterTitle style={{ fontWeight: "bold", fontSize: '2.5rem' }}>Filters</FilterTitle>
+                        </FiltersHeading>
 
                         <FilterForm>
                             <FiltersLi>
                                 <FilterDiv >
-                                    <FilterLabel>Color</FilterLabel>
-                                    <FilterPair>
-                                        <input type="checkbox" name="blue" />
-                                        <InputLabel>blue</InputLabel>
-                                    </FilterPair>
-                                    <FilterPair>
-                                        <input type="checkbox" name="white" />
-                                        <InputLabel>white</InputLabel>
-                                    </FilterPair>
-                                    <FilterPair>
-                                        <input type="checkbox" name="brown" />
-                                        <InputLabel>brown</InputLabel>
-                                    </FilterPair>
+                                <FilterLabel>Color</FilterLabel>
+
+                                    {
+                                        uniqueColors.map(color => {
+                                            return (
+                                                <FilterPair>
+                                                    <input type="checkbox" name={color} />
+                                                    <InputLabel>{color}</InputLabel>
+                                                </FilterPair>
+                                            )
+                                        })
+                                    }
                                 </FilterDiv>
 
                             </FiltersLi>
                             <FiltersLi>
                                 <FilterDiv >
                                     <FilterLabel>Max Price </FilterLabel>
-                                    <FilterLabel> {maxPrice || 100} </FilterLabel>
-                                    <FilterRange name="price" type="range" min="1" max="100" defaultValue="100" onChange={updateValue}></FilterRange>
+                                    <FilterLabel> {maxPrice || highest} </FilterLabel>
+                                    <FilterRange name="price" type="range" min="1" max={highest} defaultValue="100" onChange={updateValue}></FilterRange>
                                 </FilterDiv>
                             </FiltersLi>
                             <FilterSubmit type="submit" value="Filter" onClick={(e) => onFilter(e)} />
@@ -145,18 +174,18 @@ const Products = ({ data, category }) => {
 
                     <ProductContainer>
                         {items.length
-                        ?items.map((item, index) => {
-                            return (
-                                <Product
-                                    key={index}
-                                    name={item.name}
-                                    image={item.image}
-                                    description={item.description}
-                                    price={item.price}
-                                    rating={item.rating}
-                                />)
-                        })
-                    :<h1>No items found!</h1>}
+                            ? items.map((item, index) => {
+                                return (
+                                    <Product
+                                        key={index}
+                                        name={item.name}
+                                        image={item.image}
+                                        description={item.description}
+                                        price={item.price}
+                                        rating={item.rating}
+                                    />)
+                            })
+                            : <h1>No items found!</h1>}
                     </ProductContainer>
                 </CategoryProductsDiv>
             </FilterAndProductContainer>
