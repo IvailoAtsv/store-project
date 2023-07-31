@@ -58,7 +58,7 @@ const Footer = () => {
         </ContactDiv>
 
         <LinkContainer>
-          <Heading>Useful links</Heading>
+          <Heading>Links</Heading>
           <LinkPairDiv><BsFillBagFill /><FooterLink to="/">Bags</FooterLink></LinkPairDiv>
           <LinkPairDiv><TbShoe /><FooterLink to="/shoes/">Shoes</FooterLink></LinkPairDiv>
           <LinkPairDiv><GiLargeDress /><FooterLink to="/dresses/">Dresses</FooterLink></LinkPairDiv>

@@ -95,7 +95,6 @@ height:150px;
 `
 export const Heading = styled.h1`
 color:white;
-padding-bottom:1rem;
 text-align:center;
 `
 export const ContactA = styled.a`
